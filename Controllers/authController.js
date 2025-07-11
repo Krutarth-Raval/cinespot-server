@@ -208,14 +208,21 @@ export const verifyEmail = async (req, res) => {
 };
 
 //user authenticated
-
 export const isAuthenticated = async (req, res) => {
   try {
-    return res.json({ success: true });
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ success: false, message: "Not Authorized. Login Again" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    return res.json({ success: true, user: decoded });
   } catch (error) {
-    res.json({ success: false, message: error.message });
+    return res.status(401).json({ success: false, message: "Invalid or expired token" });
   }
 };
+
 
 //password reset otp
 export const sendResetOtp = async (req, res) => {
