@@ -1,10 +1,7 @@
 import express from "express";
 import userAuth from "../middleware/userAuth.js";
-import {
-  addToCollection,
-  getUserCollection,
-  removeFromCollection
-} from "../controllers/collectionController.js";
+import { addToCollection, getUserCollection, removeFromCollection } from "../Controllers/collectionController.js";
+
 
 const router = express.Router();
 
